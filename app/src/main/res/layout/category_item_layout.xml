@@ -11,23 +11,17 @@
 
         <TextView
             android:id="@+id/tv_title_category_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/ItemText"
             android:textSize="@dimen/text_size_title_category"/>
 
         <TextView
             android:id="@+id/tv_count_category_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/ItemText"
             android:textSize="@dimen/text_size_description_category"/>
 
         <TextView
             android:id="@+id/tv_size_category_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            style="@style/ItemText"
             android:textSize="@dimen/text_size_description_category"/>
     </LinearLayout>
 

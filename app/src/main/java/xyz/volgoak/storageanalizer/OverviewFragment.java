@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -63,7 +64,8 @@ public class OverviewFragment extends Fragment implements CategoryRecyclerAdapte
         super.onStart();
         RecyclerView rv = (RecyclerView) getView().findViewById(R.id.rv_overview_frag);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(llm);
+        GridLayoutManager glm = new GridLayoutManager(getContext(), 2);
+        rv.setLayoutManager(glm);
 
         CategoryRecyclerAdapter adapter = new CategoryRecyclerAdapter(getContext(), mFileLists);
         adapter.setmCategorySelectListener(this);

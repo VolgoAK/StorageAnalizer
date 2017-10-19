@@ -61,8 +61,8 @@ public class FilesRecyclerAdapter extends RecyclerView.Adapter<FilesRecyclerAdap
 
         public void bind(File file) {
             titleTv.setText(file.getName());
-            // TODO: 19.10.2017 change this shit
-            String path = "path";
+
+            String path = "";
             try{
                path = file.getCanonicalPath();
             }catch(IOException ex){

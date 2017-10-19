@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_size_title_overview">26sp</dimen>
-    <dimen name="text_size_description_overview">20sp</dimen>
+    <dimen name="text_size_title_overview">20sp</dimen>
+    <dimen name="text_size_description_overview">16sp</dimen>
 
-    <dimen name="text_size_title_category">20sp</dimen>
-    <dimen name="text_size_description_category">16sp</dimen>
+    <dimen name="text_size_title_category">16sp</dimen>
+    <dimen name="text_size_description_category">12sp</dimen>
 
     <dimen name="cards_margin">2dp</dimen>
+    <dimen name="views_padding">4dp</dimen>
 </resources>
