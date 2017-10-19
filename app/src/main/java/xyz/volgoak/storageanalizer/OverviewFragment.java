@@ -19,7 +19,7 @@ import xyz.volgoak.storageanalizer.Recycler.CategoryRecyclerAdapter;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Отображает категории файлов - "аудио", "видео" и т.д.
  */
 public class OverviewFragment extends Fragment implements CategoryRecyclerAdapter.OnCategorySelectListener{
 
