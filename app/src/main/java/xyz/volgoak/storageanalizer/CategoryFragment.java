@@ -17,7 +17,7 @@ import xyz.volgoak.storageanalizer.Recycler.FilesRecyclerAdapter;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Фрагмент отображает конкретную категорию файлов.
  */
 public class CategoryFragment extends Fragment {
 
