@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -23,21 +22,11 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
     private FilesSorter mFilesSorter;
     private ProgressBar mProgressBar;
     private FilesAnalyzeTask mFilesTask;
-    // TODO: 19.10.2017 save files in on destroy method
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /*File[] fs = getExternalFilesDirs(null);
-        for(File f : fs){
-            Log.d(TAG, "onCreate: " + f.getAbsolutePath());
-        }
-        Log.d(TAG, "onCreate: " + Environment.getExternalStorageDirectory().getPath());
-        Log.d(TAG, "onCreate: " + Environment.isExternalStorageRemovable());*/
-
-//        Log.d(TAG, " sd path " + getSdCardPath().getAbsolutePath());
 
         if (savedInstanceState == null) {
             mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_main);
@@ -52,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
 
     /**
      * Анализирует директорию, передает файлы в FilesSorter
+     *
      * @param file папка для анализа.
      */
     private void analyzeFiles(File file) {
@@ -71,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mFilesTask != null){
+        if (mFilesTask != null) {
             mFilesTask.cancel(true);
         }
     }
@@ -79,7 +69,8 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
     /**
      * Callback для OverviewFragment, запускает фрагмент, отображающий
      * конкретную категорию.
-     * @param category
+     *
+     * @param category категория файлов для отображения.
      */
     @Override
     public void onCategorySelected(FileList category) {
@@ -94,15 +85,16 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
     /**
      * Возвращает расположение карты памяти.
      * Ужасный хардкод, но к сожалению, я не смог найти лучшего решения.
-     * @return
+     *
+     * @return File корневая папка Sd карты или null если карта не найдена.
      */
-    private File getSdCardPath(){
+    private File getSdCardPath() {
         String[] possiblePath = new String[]{"/sdcard1", "/extSdCard", "extsdcard",
-            "sdcard1"};
+                "sdcard1"};
         String root = "/storage";
-        for(String var : possiblePath){
+        for (String var : possiblePath) {
             File file = new File(root, var);
-            if(file.exists()) return file;
+            if (file.exists()) return file;
         }
         return null;
     }
@@ -118,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
 
             analyzeFiles(Environment.getExternalStorageDirectory());
             File sdCardFile = getSdCardPath();
-            if(sdCardFile != null){
+            if (sdCardFile != null) {
                 analyzeFiles(sdCardFile);
             }
             return null;
