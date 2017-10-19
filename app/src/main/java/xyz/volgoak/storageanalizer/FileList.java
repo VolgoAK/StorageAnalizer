@@ -19,12 +19,6 @@ public class FileList extends ArrayList<File> implements Serializable{
         mExtensions = extensions;
     }
 
-    /*@Override
-    public boolean add(File f) {
-        mFilesSize += f.length();
-        return super.add(f);
-    }*/
-
     @Override
     public boolean add(File f) {
 

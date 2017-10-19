@@ -14,21 +14,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_size_title"/>
+            android:textSize="@dimen/text_size_title_overview"/>
 
         <TextView
             android:id="@+id/tv_count_overview_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_size_description"/>
+            android:textSize="@dimen/text_size_description_overview"/>
 
         <TextView
             android:id="@+id/tv_size_overview_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_size_description"/>
+            android:textSize="@dimen/text_size_description_overview"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
