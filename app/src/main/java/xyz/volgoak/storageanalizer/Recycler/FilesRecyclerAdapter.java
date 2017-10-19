@@ -31,7 +31,7 @@ public class FilesRecyclerAdapter extends RecyclerView.Adapter<FilesRecyclerAdap
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.overview_item_layout, parent, false);
+        View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item_layout, parent, false);
         return new VH(root);
     }
 
@@ -54,9 +54,9 @@ public class FilesRecyclerAdapter extends RecyclerView.Adapter<FilesRecyclerAdap
         public VH(View root) {
             super(root);
             this.root = root;
-            titleTv = (TextView) root.findViewById(R.id.tv_title_overview_item);
-            pathTv = (TextView) root.findViewById(R.id.tv_count_overview_item);
-            sizeTv = (TextView) root.findViewById(R.id.tv_size_overview_item);
+            titleTv = (TextView) root.findViewById(R.id.tv_title_category_item);
+            pathTv = (TextView) root.findViewById(R.id.tv_count_category_item);
+            sizeTv = (TextView) root.findViewById(R.id.tv_size_category_item);
         }
 
         public void bind(File file) {

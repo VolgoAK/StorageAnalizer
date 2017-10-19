@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
 
     private FilesSorter mFilesSorter;
     private ProgressBar mProgressBar;
+    private FilesAnalyzeTask mFilesTask;
     // TODO: 19.10.2017 save files in on destroy method
 
     @Override
@@ -28,17 +30,30 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*File[] fs = getExternalFilesDirs(null);
+        for(File f : fs){
+            Log.d(TAG, "onCreate: " + f.getAbsolutePath());
+        }
+        Log.d(TAG, "onCreate: " + Environment.getExternalStorageDirectory().getPath());
+        Log.d(TAG, "onCreate: " + Environment.isExternalStorageRemovable());*/
+
+//        Log.d(TAG, " sd path " + getSdCardPath().getAbsolutePath());
+
         if (savedInstanceState == null) {
             mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_main);
             mProgressBar.setVisibility(View.VISIBLE);
 
             mFilesSorter = new FilesSorter();
 
-            FilesAnalyzeTask task = new FilesAnalyzeTask();
-            task.execute();
+            mFilesTask = new FilesAnalyzeTask();
+            mFilesTask.execute();
         }
     }
 
+    /**
+     * Анализирует директорию, передает файлы в FilesSorter
+     * @param file папка для анализа.
+     */
     private void analyzeFiles(File file) {
         File[] files = file.listFiles();
         Queue<File> fileQueue = new LinkedList<>(Arrays.asList(files));
@@ -54,6 +69,19 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mFilesTask != null){
+            mFilesTask.cancel(true);
+        }
+    }
+
+    /**
+     * Callback для OverviewFragment, запускает фрагмент, отображающий
+     * конкретную категорию.
+     * @param category
+     */
+    @Override
     public void onCategorySelected(FileList category) {
         CategoryFragment fragment = CategoryFragment.newInstance(category);
         getSupportFragmentManager().beginTransaction()
@@ -63,13 +91,36 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
                 .commit();
     }
 
+    /**
+     * Возвращает расположение карты памяти.
+     * Ужасный хардкод, но к сожалению, я не смог найти лучшего решения.
+     * @return
+     */
+    private File getSdCardPath(){
+        String[] possiblePath = new String[]{"/sdcard1", "/extSdCard", "extsdcard",
+            "sdcard1"};
+        String root = "/storage";
+        for(String var : possiblePath){
+            File file = new File(root, var);
+            if(file.exists()) return file;
+        }
+        return null;
+    }
+
+    /**
+     * Запускает анализ файловой системы. По завершении запускает фрагмент,
+     * который отображает файлы по категориям.
+     */
     private class FilesAnalyzeTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
+
             analyzeFiles(Environment.getExternalStorageDirectory());
-            // TODO: 19.10.2017 remove this nasty hardcode
-//            analyzeFiles(new File("/storage/extSdCard"));
+            File sdCardFile = getSdCardPath();
+            if(sdCardFile != null){
+                analyzeFiles(sdCardFile);
+            }
             return null;
         }
 
