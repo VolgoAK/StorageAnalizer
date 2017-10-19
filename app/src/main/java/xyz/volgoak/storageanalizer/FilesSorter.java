@@ -8,17 +8,14 @@ import java.util.Collections;
  * Created by Volgoak on 19.10.2017.
  */
 
+/**
+ * Распределяет файлы по категориям и хранит их в FileLists
+ */
 public class FilesSorter {
-
-    /*private FileList images;
-    private FileList sounds;
-    private FileList videos;
-    private FileList archives;
-    private FileList apks;
-    private FileList others;*/
 
     private ArrayList<FileList> fileLists;
 
+    //Возможные расширения файлов для категорий.
     static String[] imageExtensions = new String[]{".jpg", ".png", ".gif", ".jpeg"};
     static String[] soundExtensions = new String[]{".mp3", ".wav", ".flac", ".mid"};
     static String[] videoExtensions = new String[]{".mp4", ".3gp", ".mkv"};
@@ -29,23 +26,6 @@ public class FilesSorter {
 //    public static final String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)";
 
     public FilesSorter(){
-        /*images = new FileList("Images");
-        images.setExtensions(imageExtensions);
-
-        sounds = new FileList("Sounds");
-        sounds.setExtensions(soundExtensions);
-
-        videos = new FileList("Videos");
-        videos.setExtensions(videoExtensions);
-
-        archives = new FileList("Archives");
-        archives.setExtensions(archiveExtensions);
-
-        apks = new FileList("Apks");
-        apks.setExtensions(apkExtensions);
-
-        others = new FileList("Others");*/
-
         fileLists = new ArrayList<>();
 
         fileLists.add(new FileList("Images", imageExtensions));
