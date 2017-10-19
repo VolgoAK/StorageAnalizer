@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +20,17 @@ import xyz.volgoak.storageanalizer.Recycler.CategoryRecyclerAdapter;
 /**
  * Отображает категории файлов - "аудио", "видео" и т.д.
  */
-public class OverviewFragment extends Fragment implements CategoryRecyclerAdapter.OnCategorySelectListener{
+public class OverviewFragment extends Fragment implements CategoryRecyclerAdapter.OnCategorySelectListener {
 
     public static final String PARAM_FILE_LISTS = "file_lists_param";
 
     private List<FileList> mFileLists;
     private OverviewFragListener mFragmentListener;
 
+
+    public OverviewFragment() {
+        // Required empty public constructor
+    }
 
     public static OverviewFragment newInstance(ArrayList<FileList> fileLists) {
 
@@ -39,15 +42,11 @@ public class OverviewFragment extends Fragment implements CategoryRecyclerAdapte
         return fragment;
     }
 
-    public OverviewFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             mFileLists = (List<FileList>) getArguments().getSerializable(PARAM_FILE_LISTS);
         }
     }
@@ -74,11 +73,11 @@ public class OverviewFragment extends Fragment implements CategoryRecyclerAdapte
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof OverviewFragListener){
+        if (context instanceof OverviewFragListener) {
             mFragmentListener = (OverviewFragListener) context;
-        }else{
+        } else {
             throw new RuntimeException(context.toString() +
-                " must implement OverviewFragListener");
+                    " must implement OverviewFragListener");
         }
     }
 
@@ -87,7 +86,7 @@ public class OverviewFragment extends Fragment implements CategoryRecyclerAdapte
         mFragmentListener.onCategorySelected(category);
     }
 
-    interface OverviewFragListener{
+    interface OverviewFragListener {
         void onCategorySelected(FileList category);
     }
 }
