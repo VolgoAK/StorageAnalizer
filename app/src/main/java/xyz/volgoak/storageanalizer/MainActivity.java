@@ -1,12 +1,19 @@
 package xyz.volgoak.storageanalizer;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +26,11 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    public static final int EXTERNAL_STORAGE_PERMISSION_REQUEST = 5674;
+
+    //Сортирует файлы и хранит списки
     private FilesSorter mFilesSorter;
+
     private ProgressBar mProgressBar;
     private FilesAnalyzeTask mFilesTask;
 
@@ -31,11 +42,31 @@ public class MainActivity extends AppCompatActivity implements OverviewFragment.
         if (savedInstanceState == null) {
             mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_main);
             mProgressBar.setVisibility(View.VISIBLE);
-
             mFilesSorter = new FilesSorter();
-
             mFilesTask = new FilesAnalyzeTask();
-            mFilesTask.execute();
+
+
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        EXTERNAL_STORAGE_PERMISSION_REQUEST);
+            } else mFilesTask.execute();
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: ");
+
+        if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mFilesTask.execute();
+            } else {
+                Toast.makeText(this, "Chicken! Just delete this app!", Toast.LENGTH_LONG).show();
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
